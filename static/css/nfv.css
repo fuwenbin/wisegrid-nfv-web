@@ -1,0 +1,108 @@
+
+
+html,body{
+   background-color:#fff;
+   min-width:900;
+   margin:0px ;
+   padding:0px;
+   font-size:13px;
+   height: 100%; 
+    overflow-x: hidden;  
+}
+.topbar{
+   background:#eee;
+   height:35px;
+   line-height:35px;
+   bord-bottom:1px solid #ccc;
+}
+
+#container{
+   height:100%;
+   margin: auto;
+} 
+#main_content{
+   height:100%;
+}
+
+.content_body{
+    float:left;
+    color:#cdc;
+    width:84%;
+}
+
+.sidebar{
+    background-color: #f9f9f9;
+    padding-top: 20px;
+    height:100%;
+    width:16%;
+    float:left;
+    box-shadow: inset -3px 2px 6px -2px #C7C7C7, inset -1px 0 0 0 #cccccc;
+}
+
+.nav_accordion{
+    color: #6e6e6e; 
+}
+.nav_accordion dt {
+    border-bottom: 1px solid #bbbbbb;
+    padding: 0.5em 1.2em;
+    max-width: 231px;
+    cursor: pointer;
+    margin-left:5px;
+    transition: all 0.3s ease 0s;
+}
+.top_border{
+   border-top: 1px solid #bbbbbb;
+}
+.nav_accordion dt:first-child {
+    border-top: 1px solid #bbbbbb;
+}
+.nav_accordion dt.active {
+    background-color:#e3e4e6;
+}
+
+.nav_accordion dt:hover{
+    background-color:#DBDCDF;
+}
+
+.nav_accordion dd ul {
+	list-style: none outside none;
+	padding:0px;
+}
+.nav_accordion dd li{
+    width:100%;
+}
+.nav_accordion dd a{
+    color: #6e6e6e;
+    padding: 0.7em 1.2em;
+    outline: none;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+    transition: all 0.3s ease 0s;
+}
+.nav_accordion dd a.active{
+	background: #ffffff;
+    border-top: 1px solid #e5e5e5;
+    border-left: 4px solid #d93c27;
+    border-bottom: 1px solid #e5e5e5;
+    -webkit-box-shadow: -3px 2px 6px -3px #c7c7c7;
+    box-shadow: -3px 3px 6px -3px #c7c7c7;
+}
+.nav_accordion dd a:hover{
+    color: #d93c27;
+    cursor:pointer;
+}
+
+.fa{
+    display: inline-block;
+    font: normal normal normal 14px / 1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+    margin-left: 0.3em;
+}
+.pull-right {
+    float: right !important;
+}
