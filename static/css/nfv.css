@@ -106,3 +106,6 @@ html,body{
 .pull-right {
     float: right !important;
 }
+.undisplay {
+    display:none
+}

@@ -1,8 +1,8 @@
-<div class="sidebar">
+﻿<div class="sidebar">
 	<dl class="nav_accordion">
  		<dt>NFV 功能 <span class="fa pull-right"></span>
  		</dt>
- 		<dd style="display:none;">
+ 		<dd class = "{% ifequal node 1%} active {% else %} undisplay {% endifequal %}">
  			<ul>
  				<li>
  				<a>Load balance</a>
@@ -25,18 +25,21 @@
  			</ul>
  		<dd>
         <dt> 系统配置</dt>
-        <dd style="display:none;">
+        <dd class = "{% ifequal node 2 %} active {% else %} undisplay {% endifequal %}">
         	<ul>
  				<li>
  				 <a>配置</a>
  				</li>
  			</ul>
  		<dd>
- 		<dt>网络配置</dt>
-        <dd style="display:none;">
+ 	<dt>网络配置</dt>
+        <dd class="{% ifequal node 3%} active {% else %} undisplay {% endifequal %}">
         	<ul>
+        	               <li>
+        	                  <a href="/topogoly">网络拓扑</a>
+        	               </li>
  				<li>
- 				<a>二层网络配置</a>
+ 				<a>二层网络配置</a> 
  				</li>
  				<li>
  				<a>三层网络配置</a>
