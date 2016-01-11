@@ -1,7 +1,23 @@
-﻿{% extends 'base.html' %}
-{% load i18n %}
-{% load url from future %}
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block style %}
+	<link rel="stylesheet" href={% static 'css/topology.css' %} />
+{% endblock %}
 
-{% block content %}
-<h1>网络拓扑</h1>
+
+{% block siderbar %}
+     {% include 'siderbar.html'%}
+{% endblock %}
+
+{% block content%}
+<h1> hello  ryu topogoly </h1>
+<div id="b1device">
+	<svg id="svg1"></svg>
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/d3.js'%}" charset="utf-8"></script>
+<script type="text/javascript" src="{% static 'js/d3-layout-b1.js'%}"></script>
 {% endblock %}

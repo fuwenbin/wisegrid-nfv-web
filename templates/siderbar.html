@@ -1,50 +1,49 @@
-﻿<div class="sidebar">
-	<dl class="nav_accordion">
- 		<dt>NFV 功能 <span class="fa pull-right"></span>
- 		</dt>
+<div class="sidebar">
+        <dl class="nav_accordion">
+ 		<dt>NFV 功能 <span class="fa pull-right"></span></dt>
  		<dd class = "{% ifequal node 1%} active {% else %} undisplay {% endifequal %}">
  			<ul>
  				<li>
- 				<a>Load balance</a>
+                                        <a class= "{% ifequal request.path '/loadbalance' %}active{% endifequal %} " href="/loadbalance">Load balance</a>
  				</li>
  				<li>
- 				<a>Firewall</a>
+                                        <a class="{% ifequal request.path '/firewall' %}active{% endifequal %}" href="/firewall">Firewall</a>
  				</li>
  				<li>
- 				<a>WAF</a>
+                                        <a class="{% ifequal request.path '/waf' %}active{% endifequal %}" href="/waf">WAF</a>
  				</li>
  				<li>
- 				<a>Anti-DDOS</a>
+                                        <a class="{% ifequal request.path '/anti' %}active{% endifequal %}" href="/anti">Anti-DDOS</a>
  				</li>
  				<li>
- 				<a>Auditing</a>
+                                        <a class="{% ifequal request.path '/audi' %}active{% endifequal %}" href="/audi">Auditing</a>
  				</li>
  				<li>
- 				<a>IPS</a>
+                                        <a class="{% ifequal request.path '/ips' %}active{% endifequal %}" href="/ips">IPS</a>
  				</li>
  			</ul>
- 		<dd>
-        <dt> 系统配置</dt>
-        <dd class = "{% ifequal node 2 %} active {% else %} undisplay {% endifequal %}">
-        	<ul>
+ 		</dd>
+                <dt> 系统配置</dt>
+                <dd class = "{% ifequal node 2 %} active {% else %} undisplay {% endifequal %}">
+                	<ul>
  				<li>
- 				 <a>配置</a>
+                                        <a class="{% ifequal request.path '/config' %}active{% endifequal %}" href="/config">配置</a>
  				</li>
- 			</ul>
- 		<dd>
- 	<dt>网络配置</dt>
-        <dd class="{% ifequal node 3%} active {% else %} undisplay {% endifequal %}">
-        	<ul>
-        	               <li>
-        	                  <a href="/topogoly">网络拓扑</a>
-        	               </li>
+         		</ul>
+         	</dd>
+         	<dt>网络配置</dt>
+                <dd class="{% ifequal node 3%} active {% else %} undisplay {% endifequal %}">
+                	<ul>
+        	                <li>
+        	                       <a class="{% ifequal request.path '/topology/' %}active{% endifequal %}" href="{% url 'topology' %}">网络拓扑</a>
+        	                </li>
  				<li>
- 				<a>二层网络配置</a> 
+                                        <a class="{% ifequal request.path '/layer2' %}active{% endifequal %}" href="/layer2">二层网络配置</a> 
  				</li>
  				<li>
- 				<a>三层网络配置</a>
+                                        <a class="{% ifequal request.path '/layer3' %}active{% endifequal %}" href="/layer3">三层网络配置</a>
  				</li>
- 			</ul>
- 		<dd>
-	</dl>
+         		</ul>
+         	</dd>
+        </dl>
 </div>

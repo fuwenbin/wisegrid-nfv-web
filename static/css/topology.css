@@ -1,0 +1,76 @@
+#b1device {
+#    border: 1px solid #000000;
+    position: relative;
+    min-height: 600px;
+    min-width:960px;
+}
+
+.node {
+}
+
+.node.fixed {
+    fill: #C0C0C0;
+}
+
+.node text {
+    font-size: 14px;
+}
+
+.link {
+    stroke: #090909;
+    stroke-opacity: .6;
+    stroke-width: 2px;
+}
+
+.port circle {
+    stroke: black;
+    fill: #C5F9F9;
+}
+
+.port text {
+    font-size: 10px;
+}
+
+.topologyball {
+    display: none;
+    background: #fff;
+    -webkit-box-shadow: 0px 1px 6px #777;
+    box-shadow: 0px 1px 6px #777;
+    position: absolute;
+    left: 100px;
+    top: 20px;
+    z-index: 500;
+    border-radius: 5px;
+    color: #333;
+    min-width: 200px;
+    line-height: 1.2;
+    font-size: 11px;
+}
+#b1topology{
+    z-index: 100;
+    left: 100px;
+    background: #fff;
+    top: 20px;
+    border-radius: 5px;
+     -webkit-box-shadow: 0px 1px 6px #777;
+    box-shadow: 0px 1px 6px #777;
+}
+.closeballoon {
+    font-size: 16px;
+    line-height: 1;
+    display: block;
+    position: absolute;
+    font-weight: bold;
+    right: 6px;
+    top: 0px;
+    cursor: pointer;
+    padding: 3px;
+    color: #aaa;
+}
+/*.transparent_half {*/
+      /*filter:alpha(opacity=80);*/
+      /*-moz-opacity:0.8;*/
+      /*-khtml-opacity: 0.8;*/
+      /*opacity: 0.8;*/
+/*}*/
+
