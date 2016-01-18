@@ -4,8 +4,12 @@
     min-height: 600px;
     min-width:960px;
 }
+#svgContainer{
+    cursor: -webkit-grab;
 
+}
 .node {
+    cursor: pointer;
 }
 
 .node.fixed {
@@ -28,10 +32,10 @@
 }
 
 .port text {
-    font-size: 10px;
+    font-size: 5px;
 }
 
-.topologyball {
+.topologyBalloon {
     display: none;
     background: #fff;
     -webkit-box-shadow: 0px 1px 6px #777;
@@ -45,6 +49,65 @@
     min-width: 200px;
     line-height: 1.2;
     font-size: 11px;
+}
+.topologyBalloon .contenBody{
+    padding: 8px 8px 0;
+}
+.topologyBalloon table.detailInfoTable {
+    margin-bottom: 5px;
+}
+.topologyBalloon .closeTopologyBalloon {
+    font-size: 16px;
+    line-height: 1;
+    display: block;
+    position: absolute;
+    font-weight: bold;
+    right: 6px;
+    top: 0px;
+    cursor: pointer;
+    padding: 3px;
+    color: #aaa;
+}
+.topologyBalloon .portTableHeader {
+    border-top: 1px solid #eee;
+    padding-top: 5px;
+    margin: 5px 0;
+    display: table;
+    width: 100%;
+}
+.topologyBalloon table.detailInfoTable td {
+    padding-right: 5px;
+    white-space: nowrap;
+}
+.topologyBalloon .portTableHeader .title {
+    display: table-cell;
+    font-size: 13px;
+    font-weight: bold;
+}
+.topologyBalloon table.detailInfoTable th, .topologyBalloon table.detailInfoTable td {
+    text-align: left;
+    vertical-align: middle;
+    padding-bottom: 3px;
+    background: transparent;
+}
+
+.topologyBalloon .footer{
+    background: #efefef;
+    border-top: 1px solid #dddddd;
+    padding: 8px;
+    border-radius: 0px 0px 7px 7px;
+}
+.topologyBalloon:after {
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 8px solid #fff;
+    display: block;
+    position: absolute;
+    top: 31px;
+    left: -8px;
+    width: 0;
+    height: 0;
+    content: "";
 }
 #b1topology{
     z-index: 100;

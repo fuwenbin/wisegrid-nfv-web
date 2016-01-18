@@ -1,18 +1,61 @@
-<div class="topologyBalloon" >
-  <a href="#close" class="closeTopologyBalloon">x</a>
+<div class="topologyBalloon" id="instance-1" style="left: 519.993px; top: 136.354px; display: block;">
+  <a href="#close" class="closeTopologyBalloon">×</a>
   <div class="contentBody">
+
+
+    <table class="detailInfoTable">
+      <caption>private2</caption>
+      <tbody>
+        <tr>
+          <th class="device">ID</th>
+          <td>aeaebf3b-295a-43f1-a995-980d380af636</td>
+        </tr>
+        <tr>
+          <th class="device">状态</th>
+          <td>
+            <span class="active">ACTIVE</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+    <div class="portTableHeader">
+      <div class="title">子网</div>
+      <div class="action">
+        <a class="add-subnet btn btn-default btn-xs ajax-modal network" href="">
+          <span class="fa fa-plus"></span>
+          创建子网
+        </a>
+      </div>
+    </div>
+    <table class="detailInfoTable">
+      <caption></caption>
+      <tbody>
+        <tr>
+          <th>
+            <span title="5f2a1a86-72cd-4c97-806b-1d9792d7c08f">
+              <a href="">5f2a1a86-72cd-4c97-806b-1d9792d7c08f</a>
+            </span>
+          </th>
+          <td>192.168.11.0/24</td>
+          <td class="delete">
+            <button class="delete-port btn btn-danger btn-xs" data-router-id="" data-network-id="aeaebf3b-295a-43f1-a995-980d380af636" data-port-id="5f2a1a86-72cd-4c97-806b-1d9792d7c08f">删除子网</button>
+          </td>
+        </tr>
+  </tbody>
+    </table>
+
   </div>
   <div class="footer">
     <div class="footerInner">
       <div class="cell link">
-        <a href="{{url}}">» {{view_details_label}}</a>
-            <a href="{{url}}{{console}}" class="vnc_window">» {{open_console_label}}</a>
-            {{/console_id}}
+        <a href="">» 查看详情</a><a href="">» 打开控制台</a>
       </div>
       <div class="cell delete">
-{#        <button class="delete-device btn btn-danger btn-xs {{type}}" data-type="{{type}}"  data-device-id="{{id}}">{{delete_label}}</button>#}
+        <button class="delete-device btn btn-danger btn-xs network" >删除网络</button>
       </div>
-      {{/type}}
     </div>
   </div>
 </div>

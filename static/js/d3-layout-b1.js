@@ -6,8 +6,9 @@ var CONF = {
     force: {
         width: 960,
         height: 500,
-        dist: 100,
-        charge: -400
+        dist: 60,
+        sdist:60,
+        charge: -700
     }
 };
 
@@ -32,85 +33,175 @@ function dpid_to_int(dpid) {
 var elem = {
     force: d3.layout.force()
         .size([CONF.force.width, CONF.force.height])
+        .gravity(0.05)
         .charge(CONF.force.charge)
-        .linkDistance(CONF.force.dist)
-        .on("tick", _tick),
-    svg: d3.select("#svg1")
+        .linkDistance(function(d){
+            if(d.target.type=='device'&& d.source.type=="device"){
+                 return CONF.force.dist+60;
+            }else{
+                return CONF.force.dist-20;
+            }
+        }),
+        //.on("tick", _tick),
+    outer_group: d3.select("#svg1")
         .attr("width", CONF.force.width)
-        .attr("height", CONF.force.height),
+        .attr("height", CONF.force.height)
+        .attr('pointer-events','all')
+        .append('g'),
     console: d3.select("body").append("div")
         .attr("id", "console")
-        .attr("width", CONF.force.width)
+        .attr("width", CONF.force.width),
+    zoom:d3.behavior.zoom()
 };
+elem.outer_group.append('rect')
+    .attr('width','100%')
+    .attr('height','100%')
+    .attr('fill','white')
+    .on('click',function(){
+        if($('.topologyBalloon')) {
+            $('.topologyBalloon').remove();
+            self.force.start();
+        }
+    });
+elem.vis = elem.outer_group.append('g');
 function _tick() {
-    elem.link.attr("x1", function(d) { return d.source.x; })
+    elem.vis.selectAll(".link").attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
 
-    elem.node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    elem.vis.selectAll(".node").attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-    elem.port.attr("transform", function(d) {
+    elem.vis.selectAll(".port").attr("transform", function(d) {
         var p = topo.get_port_point(d);
         return "translate(" + p.x + "," + p.y + ")";
     });
+  //添加设备区域背景
+    elem.vis.selectAll("path.hulls")
+        .data(topo.convex_hulls(elem.vis.selectAll(".node").data()))
+        .enter().insert('path')
+        .attr('class','hulls')
+        .attr('pointer-events','all')
+        .style('fill',function(d){
+            return self.fill(d.group);
+        })
+        .attr('d',function(d){
+            return self.curve(d.path);
+        })
+        .style("stroke",function(d){
+            return self.fill(d.group);
+        })
+        .style('stroke-linejoin','round')
+        .style('stroke-width',10)
+        .style('opacity',0.2);
 }
-elem.drag = elem.force.drag().on("dragstart", _dragstart);
+//elem.drag = elem.force.drag().on("dragend", _dragstart);
 function _dragstart(d) {
     var dpid = dpid_to_int(d.dpid)
-    d3.json("/stats/flow/" + dpid, function(e, data) {
-        flows = data[dpid];
-        console.log(flows);
-        elem.console.selectAll("ul").remove();
-        li = elem.console.append("ul")
-            .selectAll("li");
-        li.data(flows).enter().append("li")
-            .text(function (d) { return JSON.stringify(d, null, " "); });
-    });
-    d3.select(this).classed("fixed", d.fixed = true);
+    //d3.json("/stats/flow/" + dpid, function(e, data) {
+    //    flows = data[dpid];
+    //    console.log(flows);
+    //    elem.console.selectAll("ul").remove();
+    //    li = elem.console.append("ul")
+    //        .selectAll("li");
+    //    li.data(flows).enter().append("li")
+    //        .text(function (d) { return JSON.stringify(d, null, " "); });
+    //});
+    //d3.select(this).classed("fixed", d.fixed = true);
+    elem.draged = true;
 }
-elem.node = elem.svg.selectAll(".node");
-elem.link = elem.svg.selectAll(".link");
-elem.port = elem.svg.selectAll(".port");
 elem.update = function () {
+    self = this
+    self.curve = d3.svg.line().interpolate('cardinal-closed').tension(0.85);
+    self.fill = d3.scale.category10();
     this.force
         .nodes(topo.nodes)
         .links(topo.links)
-        .start();
-
-    this.link = this.link.data(topo.links);
-    this.link.exit().remove();
-    this.link.enter().append("line")
+        .on('tick',function() {
+            elem.vis.selectAll(".link")
+                .attr("x1", function(d) {
+                    return d.source.x;
+                })
+                .attr("y1", function(d) {
+                    return d.source.y;
+                })
+                .attr("x2", function(d) {
+                    return d.target.x;
+                })
+                .attr("y2", function(d) { return d.target.y; });
+            elem.vis.selectAll(".node").attr("transform", function(d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            });
+            elem.vis.selectAll(".port").attr("transform", function(d) {
+                var p = topo.get_port_point(d);
+                return "translate(" + p.x + "," + p.y + ")";
+            });
+          //添加设备区域背景
+            elem.vis.selectAll("path.hulls")
+                .data(topo.convex_hulls(elem.vis.selectAll(".node").data()))
+                .attr('d',function(d){
+                    return self.curve(d.path);
+                })
+                .enter().insert('path','g')
+                .attr('class','hulls')
+                .style('fill',function(d){
+                    return self.fill(d.group);
+                })
+                .style("stroke",function(d){
+                    return self.fill(d.group);
+                })
+                .style('stroke-linejoin','round')
+                .style('stroke-width',10)
+                .style('opacity',0.2);
+        });
+        //.start();
+    self.link =  elem.vis.selectAll(".link").data(topo.links);
+    self.link.exit().remove();
+    self.link.enter().append("line")
         .attr("class", "link");
 
-    this.node = this.node.data(topo.nodes);
-    this.node.exit().remove();
-    var nodeEnter = this.node.enter().append("g")
+    self.node =  elem.vis.selectAll(".node").data(topo.nodes);
+    self.node.exit().remove();
+    var nodeEnter = self.node.enter().append("g")
         .attr("class", "node")
-        .on("dblclick", function(d) { d3.select(this).classed("fixed", d.fixed = false); })
-        .call(this.drag);
+        .call(this.force.drag);
     nodeEnter.append("image")
-        .attr("xlink:href", "/static/img/switch.svg")
+        .attr("xlink:href", function(d){
+            if(d.type=="server"){
+                return "/static/img/laptop1.svg"
+            }else if(d.type=="device"){
+                 return "/static/img/switch.svg"
+            }
+        })
         .attr("x", -CONF.image.width/2)
         .attr("y", -CONF.image.height/2)
         .attr("width", CONF.image.width)
-        .attr("height", CONF.image.height)
-        .on("click",function(d){
-            var html = $("#balloonTemplate").html();
-            d3.select('#svgContainer').append(html);
+        .attr("height", CONF.image.height);
 
-
-
+    nodeEnter.on("click",function(d){
+        if($('.topologyBalloon')) {
+            $('.topologyBalloon').remove();
+        }
+        var x = d.px+CONF.image.width;
+        var y = d.py;
+        var styleVal = "left:"+x+"px;top:"+y+"px;"+"display:block;";
+        var html = $("#balloonTemplate ").html();
+        $('#svgContainer').append(html);
+        $('#svgContainer #instance-1').attr('style',styleVal);
+        $('#instance-1 .closeTopologyBalloon').on('click',function(e){
+            $('#instance-1').remove();
+            self.force.start();
         });
+        self.force.stop();
+    });
+
     nodeEnter.append("text")
         .attr("dx", -CONF.image.width/2)
         .attr("dy", CONF.image.height-10)
         .text(function(d) { return "dpid: " + trim_zero(d.dpid); });
-
     var ports = topo.get_ports();
-    this.port.remove();
-    this.port = this.svg.selectAll(".port").data(ports);
-    var portEnter = this.port.enter().append("g")
+    elem.vis.selectAll(".port").remove();
+    var portEnter =elem.vis.selectAll(".port").data(ports).enter().append("g")
         .attr("class", "port");
     portEnter.append("circle")
         .attr("r", 8);
@@ -118,6 +209,13 @@ elem.update = function () {
         .attr("dx", -3)
         .attr("dy", 3)
         .text(function(d) { return trim_zero(d.port_no); });
+
+    var i=0;
+    this.force.start();
+    while(i<=100){
+        this.force.tick();
+        i++;
+    }
 };
 
 function is_valid_link(link) {
@@ -128,16 +226,31 @@ var topo = {
     nodes: [],
     links: [],
     node_index: {}, // dpid -> index of nodes array
+    load_layer_1:function(){
+
+    },
+    load_layer_2:function(){
+
+    },
+    new_node:function(){
+
+    },
+    new_line:function(){
+
+    },
     initialize: function (data) {
         this.add_nodes(data.switches);
         this.add_links(data.links);
     },
     add_nodes: function (nodes) {
         for (var i = 0; i < nodes.length; i++) {
+            var link_nodes = [];
+            nodes[i].link_nodes = link_nodes;
             this.nodes.push(nodes[i]);
         }
         this.refresh_node_index();
     },
+
     add_links: function (links) {
         for (var i = 0; i < links.length; i++) {
             if (!is_valid_link(links[i])) continue;
@@ -156,6 +269,8 @@ var topo = {
                 }
             }
             this.links.push(link);
+            this.nodes[src_index].link_nodes.push(dst_index);
+            this.nodes[dst_index].link_nodes.push(src_index);
         }
     },
     delete_nodes: function (nodes) {
@@ -238,6 +353,45 @@ var topo = {
             this.node_index[this.nodes[i].dpid] = i;
         }
     },
+    convex_hulls:function(nodes){
+        var net,_i,len,_ref,_h,i;
+        var hulls = {};
+        var networkids = {};
+        var k = 0;
+        var offset = 40;
+        while(k<nodes.length){
+            var n = nodes[k];
+            if(n!==undefined){
+                if(n.type=='server') {
+                    for (node_index in n.link_nodes) {
+                        var val = n.link_nodes[node_index];
+                        if (nodes[val].type == 'device') {
+                            _h = hulls[nodes[val].dpid] || (hulls[nodes[val].dpid] = []);
+                            _h.push([n.x - offset, n.y - offset]);
+                            _h.push([n.x - offset, n.y + offset]);
+                            _h.push([n.x + offset, n.y - offset]);
+                            _h.push([n.x + offset, n.y + offset]);
+                        }
+                    }
+                }else if(n.type=='device'){
+                     _h=hulls[n.dpid] || (hulls[n.dpid]=[]);
+                    _h.push([n.x-offset, n.y-offset]);
+                    _h.push([n.x-offset, n.y+offset]);
+                    _h.push([n.x+offset, n.y-offset]);
+                    _h.push([n.x+offset, n.y+offset]);
+                }
+            }
+            ++k;
+        }
+        var hullset = [];
+        for(i in hulls){
+            if({}.hasOwnProperty.call(hulls,i)){
+                hullset.push({group:i,path:d3.geom.hull(hulls[i])});
+            }
+        }
+        return hullset;
+    }
+
 }
 
 var rpc = {
