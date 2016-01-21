@@ -1,12 +1,7 @@
-#b1device {
-#    border: 1px solid #000000;
-    position: relative;
-    min-height: 600px;
-    min-width:960px;
-}
+
 #svgContainer{
     cursor: -webkit-grab;
-
+    width:100%;
 }
 .node {
     cursor: pointer;
@@ -129,6 +124,21 @@
     cursor: pointer;
     padding: 3px;
     color: #aaa;
+}
+.topologyBalloon .contentBody{
+    padding: 8px 8px 0;
+}
+.topologyNavi{
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.layer-2{
+    display:none;
+}
+.topologyNavi .launchButtons{
+    float: right;
+    text-align: right;
 }
 /*.transparent_half {*/
       /*filter:alpha(opacity=80);*/

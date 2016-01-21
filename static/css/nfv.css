@@ -23,22 +23,25 @@ html,body{
 #main_content{
    height:95%;
    display: table;
-   min-width: 1000px;
+   min-width: 900px;
 }
 
 .content_body{
     display: table-cell;
-    color:#cdc;
+    /*color:#cdc;*/
+    width:100%;
     vertical-align: top;
     padding-right: 15px;
     padding-left: 15px;
 }
-
+.col-xs-12{
+    widht:100%;
+}
 .sidebar{
     background-color: #f9f9f9;
     padding-top: 20px;
     height:100%;
-    width:220px;
+    min-width:220px;
     display: table-cell;
     box-shadow: inset -3px 2px 6px -2px #C7C7C7, inset -1px 0 0 0 #cccccc;
 }

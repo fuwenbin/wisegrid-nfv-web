@@ -59,9 +59,6 @@ function main() {
         svg_texts.attr("x", function(d){ return d.x; })
            .attr("y", function(d){ return d.y; });
  });
-
-
-    
 }
 
 main();

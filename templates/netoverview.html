@@ -10,10 +10,21 @@
 {% endblock %}
 
 {% block content%}
-<h1> hello  ryu topogoly </h1>
+<h1 class="title"> hello  ryu topogoly </h1>
+<div class='description'>
+在拓扑图上上下滚动你的鼠标/触控板来调整画布大小。
+在拓扑图空白处点击并拖拽来移动浏览。
+</div>
+<div class="topologyNavi layer-2" >
+    <a href="#" id="toggle_labels" class="btn btn-default ajax-modal ">
+        返回上级</a>
+    <div class="launchButtons">
+        <a href="#" id="instances__action_launch" class="btn btn-default btn-sm btn-launch ajax-modal "><span class="fa fa-cloud-upload"></span> 启动云主机</a>
+        <a href="#" id="networks__action_create" class="btn btn-default btn-sm ajax-modal "><span class="fa fa-plus"></span> 创建网络</a>
+        <a href="#" id="Routers__action_create" class="btn btn-default btn-sm ajax-modal "><span class="fa fa-plus"></span> 新建路由</a>
+    </div>
+</div>
 <div id="svgContainer">
-	<svg id="svg1"></svg>
-
 </div>
 {% endblock %}
 
@@ -21,7 +32,7 @@
 <script type="text/html" id="balloonTemplate">
      {% include "balloontemplate.html" %}
  </script>
-<script src="{% static 'js/d3.js'%}" charset="utf-8"></script>
+<script src="{% static 'js/d3.js' %}" charset="utf-8"></script>
 <script type="text/javascript" src="{% static 'js/d3-layout-b1.js'%}"></script>
 
 {% endblock %}
